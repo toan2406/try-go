@@ -123,12 +123,15 @@ func main() {
 	fmt.Println(result)
 
 	// MUTEX
-	var m sync.Mutex
+	var m1 sync.Mutex
+	var m2 sync.Mutex
 	numx := 0
+	fmt.Println(m1 == m2)
 	var test2 = func(x *int) {
-		m.Lock()
+		m1.Lock()
+		m2.Lock()
 		*x = *x + 1
-		m.Unlock()
+		m2.Unlock()
 	}
 	fmt.Println(numx)
 	for i := 0; i < 1000; i++ {
