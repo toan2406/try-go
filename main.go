@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 	"trygo/calc"
 	"trygo/greet"
@@ -120,4 +121,19 @@ func main() {
 	go dothing(c1)
 	result := <-c1
 	fmt.Println(result)
+
+	// MUTEX
+	var m sync.Mutex
+	numx := 0
+	var test2 = func(x *int) {
+		m.Lock()
+		*x = *x + 1
+		m.Unlock()
+	}
+	fmt.Println(numx)
+	for i := 0; i < 1000; i++ {
+		go test2(&numx)
+	}
+	time.Sleep(time.Second)
+	fmt.Println(numx)
 }
