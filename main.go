@@ -97,7 +97,27 @@ func main() {
 	fmt.Printf("%v is type %T \n", literalMap, literalMap)
 
 	// FIRST CLASS FUNCTION has closure too
-	var myFunc func(int, int) int = func(x, y int) int { // define 2 types!!!
-		return x + y
+	// var myFunc func(int, int) int = func(x, y int) int { // define 2 types!!!
+	//   return x + y
+	// }
+
+	// GO ROUTINE
+	var say = func(s string) {
+		for i := 0; i < 5; i++ {
+			time.Sleep(100 * time.Millisecond)
+			fmt.Println(s)
+		}
 	}
+	go say("world")
+	say("hello")
+
+	// CHANNEL
+	c1 := make(chan string)
+	var dothing = func(c chan string) {
+		time.Sleep(3 * time.Second)
+		c <- "Done"
+	}
+	go dothing(c1)
+	result := <-c1
+	fmt.Println(result)
 }
